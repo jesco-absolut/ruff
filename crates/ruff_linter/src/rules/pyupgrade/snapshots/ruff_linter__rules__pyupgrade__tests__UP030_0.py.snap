@@ -486,10 +486,141 @@ UP030 [*] Use implicit references for positional format fields
 64 |
 65 | "{{{0}}}".format(123)
    | ^^^^^^^^^^^^^^^^^^^^^
+66 |
+67 | r"{0}{1}".format("A", "B")
+   |
 help: Remove explicit positional indices
    |
 64 |
    - "{{{0}}}".format(123)
 65 + "{{{}}}".format(123)
+66 |
+   |
+note: This is an unsafe fix and may change runtime behavior
+
+UP030 [*] Use implicit references for positional format fields
+  --> UP030_0.py:67:1
+   |
+65 | "{{{0}}}".format(123)
+66 |
+67 | r"{0}{1}".format("A", "B")
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^
+68 | "{0}{1}{2}{3}".format("A", "B", "C", "D")
+69 | "{1}{0}".format("A", "B")
+   |
+help: Remove explicit positional indices
+   |
+66 |
+   - r"{0}{1}".format("A", "B")
+67 + r"{}{}".format("A", "B")
+68 | "{0}{1}{2}{3}".format("A", "B", "C", "D")
+   |
+note: This is an unsafe fix and may change runtime behavior
+
+UP030 [*] Use implicit references for positional format fields
+  --> UP030_0.py:68:1
+   |
+67 | r"{0}{1}".format("A", "B")
+68 | "{0}{1}{2}{3}".format("A", "B", "C", "D")
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+69 | "{1}{0}".format("A", "B")
+70 | "{0!r}{1:>4}".format("A", "B")
+   |
+help: Remove explicit positional indices
+   |
+67 | r"{0}{1}".format("A", "B")
+   - "{0}{1}{2}{3}".format("A", "B", "C", "D")
+68 + "{}{}{}{}".format("A", "B", "C", "D")
+69 | "{1}{0}".format("A", "B")
+   |
+note: This is an unsafe fix and may change runtime behavior
+
+UP030 [*] Use implicit references for positional format fields
+  --> UP030_0.py:69:1
+   |
+67 | r"{0}{1}".format("A", "B")
+68 | "{0}{1}{2}{3}".format("A", "B", "C", "D")
+69 | "{1}{0}".format("A", "B")
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^
+70 | "{0!r}{1:>4}".format("A", "B")
+71 | "{{0}}{0}{1}{{1}}".format("A", "B")
+   |
+help: Remove explicit positional indices
+   |
+68 | "{0}{1}{2}{3}".format("A", "B", "C", "D")
+   - "{1}{0}".format("A", "B")
+69 + "{}{}".format("B", "A")
+70 | "{0!r}{1:>4}".format("A", "B")
+   |
+note: This is an unsafe fix and may change runtime behavior
+
+UP030 [*] Use implicit references for positional format fields
+  --> UP030_0.py:70:1
+   |
+68 | "{0}{1}{2}{3}".format("A", "B", "C", "D")
+69 | "{1}{0}".format("A", "B")
+70 | "{0!r}{1:>4}".format("A", "B")
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+71 | "{{0}}{0}{1}{{1}}".format("A", "B")
+72 | "{{{0}}}{1}".format("A", "B")
+   |
+help: Remove explicit positional indices
+   |
+69 | "{1}{0}".format("A", "B")
+   - "{0!r}{1:>4}".format("A", "B")
+70 + "{!r}{:>4}".format("A", "B")
+71 | "{{0}}{0}{1}{{1}}".format("A", "B")
+   |
+note: This is an unsafe fix and may change runtime behavior
+
+UP030 [*] Use implicit references for positional format fields
+  --> UP030_0.py:71:1
+   |
+69 | "{1}{0}".format("A", "B")
+70 | "{0!r}{1:>4}".format("A", "B")
+71 | "{{0}}{0}{1}{{1}}".format("A", "B")
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+72 | "{{{0}}}{1}".format("A", "B")
+73 | "{0}{1}" "{2}{3}".format("A", "B", "C", "D")
+   |
+help: Remove explicit positional indices
+   |
+70 | "{0!r}{1:>4}".format("A", "B")
+   - "{{0}}{0}{1}{{1}}".format("A", "B")
+71 + "{{0}}{}{}{{1}}".format("A", "B")
+72 | "{{{0}}}{1}".format("A", "B")
+   |
+note: This is an unsafe fix and may change runtime behavior
+
+UP030 [*] Use implicit references for positional format fields
+  --> UP030_0.py:72:1
+   |
+70 | "{0!r}{1:>4}".format("A", "B")
+71 | "{{0}}{0}{1}{{1}}".format("A", "B")
+72 | "{{{0}}}{1}".format("A", "B")
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+73 | "{0}{1}" "{2}{3}".format("A", "B", "C", "D")
+   |
+help: Remove explicit positional indices
+   |
+71 | "{{0}}{0}{1}{{1}}".format("A", "B")
+   - "{{{0}}}{1}".format("A", "B")
+72 + "{{{}}}{}".format("A", "B")
+73 | "{0}{1}" "{2}{3}".format("A", "B", "C", "D")
+   |
+note: This is an unsafe fix and may change runtime behavior
+
+UP030 [*] Use implicit references for positional format fields
+  --> UP030_0.py:73:1
+   |
+71 | "{{0}}{0}{1}{{1}}".format("A", "B")
+72 | "{{{0}}}{1}".format("A", "B")
+73 | "{0}{1}" "{2}{3}".format("A", "B", "C", "D")
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+help: Remove explicit positional indices
+   |
+72 | "{{{0}}}{1}".format("A", "B")
+   - "{0}{1}" "{2}{3}".format("A", "B", "C", "D")
+73 + "{}{}" "{}{}".format("A", "B", "C", "D")
    |
 note: This is an unsafe fix and may change runtime behavior

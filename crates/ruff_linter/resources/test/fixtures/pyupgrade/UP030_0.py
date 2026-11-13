@@ -63,3 +63,11 @@ kwargs = {x: x for x in range(10)}
 r"\d{{1,2}} {0}".format(42)
 
 "{{{0}}}".format(123)
+
+r"{0}{1}".format("A", "B")
+"{0}{1}{2}{3}".format("A", "B", "C", "D")
+"{1}{0}".format("A", "B")
+"{0!r}{1:>4}".format("A", "B")
+"{{0}}{0}{1}{{1}}".format("A", "B")
+"{{{0}}}{1}".format("A", "B")
+"{0}{1}" "{2}{3}".format("A", "B", "C", "D")

@@ -133,9 +133,7 @@ static FORMAT_SPECIFIER: LazyLock<Regex> = LazyLock::new(|| {
                 ^|[^{]|(?:\{{2})+  # preceded by nothing, a non-brace, or an even number of braces
             )
             \{                     # opening curly brace
-                (?P<int>\d+)       # followed by any integer
-                (?P<fmt>.*?)       # followed by any text
-            }                      # followed by a closing brace
+                \d+                # followed by any integer
         ",
     )
     .unwrap()
@@ -147,7 +145,7 @@ fn remove_specifiers<'a>(value: &mut Expression<'a>, arena: &'a typed_arena::Are
         Expression::SimpleString(expr) => {
             expr.value = arena.alloc(
                 FORMAT_SPECIFIER
-                    .replace_all(expr.value, "$prefix{$fmt}")
+                    .replace_all(expr.value, "$prefix{")
                     .to_string(),
             );
         }
@@ -158,7 +156,7 @@ fn remove_specifiers<'a>(value: &mut Expression<'a>, arena: &'a typed_arena::Are
                     libcst_native::String::Simple(string) => {
                         string.value = arena.alloc(
                             FORMAT_SPECIFIER
-                                .replace_all(string.value, "$prefix{$fmt}")
+                                .replace_all(string.value, "$prefix{")
                                 .to_string(),
                         );
                     }
